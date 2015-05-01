@@ -23,13 +23,11 @@ This file can be a little bit dense at times but I'll try and cover the major pa
 
 This part should be placed in the first section after the initial SPConfig block and it's mapping Site ids to hostnames. This allows the Request Mapper to function below in the config file. In this example example.com is id #1 in IIS (Check this in the advanced settings of your site in IIS manager)
 
-```xml
-<InProcess logger="native.logger">
-  <ISAPI normalizeRequest="true" safeHeaderNames="true">
-    <Site id="1" name="example.com"/>
-  </ISAPI>
-</InProcess>
-```
+    <InProcess logger="native.logger">
+      <ISAPI normalizeRequest="true" safeHeaderNames="true">
+        <Site id="1" name="example.com"/>
+      </ISAPI>
+    </InProcess>
 
 This section tells Shibboleth which sections of the website should be protected behind the SSO. In our case example.com/secure will be protected but example.com will not. The name parameter is the subfolder that will be protected and requireSession states that they must be authenticated with shibboleth to see the contents.
 
