@@ -13,6 +13,7 @@ I was recently tasked with setting up Shibboleth SP on one of our Windows Server
 Step number one was to setup Shibboleth on our Windows Server. I downloaded the package [here](http://shibboleth.net/downloads/service-provider/latest/win64/). At the time the file I grabbed was: shibboleth-sp-2.5.4-win64.msi but version numbers may change over time. I installed it and double checked all of the steps listed under manual installation [here](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPWindowsIIS7Installer) were implemented properly.
 
 I then started the configuration process in the default installation directory.
+
 ```
 C:\opt\shibboleth-sp\etc\shibboleth\shibboleth2.xml 
 ```
