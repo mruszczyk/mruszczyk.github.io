@@ -41,54 +41,45 @@ This section tells Shibboleth which sections of the website should be protected 
 
 The entityID created here is what your site calls itself when communicating with the IDP.
 
-```xml
-<ApplicationDefaults entityID="https://example.com/shibboleth">
-```
-
+    <ApplicationDefaults entityID="https://example.com/shibboleth">
 
 The session section can be quite long so I've added comments below to explain each section and what it is doing.
 
-```xml
-<Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="true">
+    <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="true">
 
-  <!--This section states the location of your IDP and what protocols it should support-->
-  <SSO entityID="https://idp.client.com">
-    SAML2 SAML1
-  </SSO>
+      <!--This section states the location of your IDP and what protocols it should support-->
+      <SSO entityID="https://idp.client.com">
+        SAML2 SAML1
+      </SSO>
 
-  <!--This section states what protocols to support in regards to logging out-->
-  <Logout>SAML2 Local</Logout>
+      <!--This section states what protocols to support in regards to logging out-->
+      <Logout>SAML2 Local</Logout>
 
-  <!--These handlers allow you to interact with Shibboleth itself by visiting a url (In our case example.com/Shibboleth.sso/Location)-->
+      <!--These handlers allow you to interact with Shibboleth itself by visiting a url (In our case example.com/Shibboleth.sso/Location)-->
 
-  <!--This handler outputs an xml metadata file that you can use to find information about your shibboleth install and information you will be required to provide the IDP-->
-  <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+      <!--This handler outputs an xml metadata file that you can use to find information about your shibboleth install and information you will be required to provide the IDP-->
+      <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
 
-  <!-- This handler outputs information about your current logged in session -->
-  <Handler type="Session" Location="/Session" showAttributeValues="true"/>
+      <!-- This handler outputs information about your current logged in session -->
+      <Handler type="Session" Location="/Session" showAttributeValues="true"/>
 
-  <!-- JSON feed of discovery information. -->
-  <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
+      <!-- JSON feed of discovery information. -->
+      <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
 
-</Sessions>
-```
+    </Sessions>
 
 This block simply states what will be shown on your error page if something goes wrong with Shibboleth.
 
-```xml
-<Errors supportContact="root@localhost" logoLocation="/shibboleth-sp/logo.jpg" styleSheet="/shibboleth-sp/main.css"/>
-```
+    <Errors supportContact="root@localhost" logoLocation="/shibboleth-sp/logo.jpg" styleSheet="/shibboleth-sp/main.css"/>
 
 This is the important part, this is the metadata provided by your IDP with "instructions" on how to connect. In this example our client gave us an xml file that I loaded locally but there are options that allow you to download a dynamic metadata file
 
-```xml
-<MetadataProvider type="XML" file="partner-metadata.xml"/>
+    <MetadataProvider type="XML" file="partner-metadata.xml"/>
 
-<!-- Attribute and trust options you shouldn't need to change. -->
-<AttributeExtractor type="XML" validate="true" path="attribute-map.xml"/>
-<AttributeResolver type="Query" subjectMatch="true"/>
-<AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
-```
+    <!-- Attribute and trust options you shouldn't need to change. -->
+    <AttributeExtractor type="XML" validate="true" path="attribute-map.xml"/>
+    <AttributeResolver type="Query" subjectMatch="true"/>
+    <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 
 That was about it for configuring the shibboleth2.xml file. There are several other sections that have values that should not be removed but I didn't break them out. I've posted a complete "basic" configuration file [here](http://mruszczyk.github.io/files/shibboleth2.xml) that includes those sections.
 
