@@ -12,9 +12,10 @@ I was recently tasked with setting up Shibboleth SP on one of our Windows Server
 
 Step number one was to setup Shibboleth on our Windows Server. I downloaded the package [here](http://shibboleth.net/downloads/service-provider/latest/win64/). At the time the file I grabbed was: shibboleth-sp-2.5.4-win64.msi but version numbers may change over time. I installed it and double checked all of the steps listed under manual installation [here](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPWindowsIIS7Installer) were implemented properly.
 
-I then started the configuration process in 
-    C:\opt\shibboleth-sp\etc\shibboleth\shibboleth2.xml 
-that's the default installation directory.
+I then started the configuration process in the default installation directory.
+```
+C:\opt\shibboleth-sp\etc\shibboleth\shibboleth2.xml 
+```
 
 This file can be a little bit dense at times but I'll try and cover the major parts but I found the abundant amount of commented out configuration to be overwhealming. I saved a copy and started building from scratch using the pieces I needed from the example.
 
@@ -49,6 +50,7 @@ The entityID created here is what your site calls itself when communicating with
 
 
 The session section can be quite long so I've added comments below to explain each section and what it is doing.
+
 ```xml
 <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="true">
 
@@ -81,6 +83,7 @@ This block simply states what will be shown on your error page if something goes
 ```
 
 This is the important part, this is the metadata provided by your IDP with "instructions" on how to connect. In this example our client gave us an xml file that I loaded locally but there are options that allow you to download a dynamic metadata file
+
 ```xml
 <MetadataProvider type="XML" file="partner-metadata.xml"/>
 
@@ -89,6 +92,7 @@ This is the important part, this is the metadata provided by your IDP with "inst
 <AttributeResolver type="Query" subjectMatch="true"/>
 <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 ```
+
 That was about it for configuring the shibboleth2.xml file. There are several other sections that have values that should not be removed but I didn't break them out. I've posted a complete "basic" configuration file [here](http://mruszczyk.github.io/files/shibboleth2.xml) that includes those sections.
 
 At this point I had thought I was done with configuring Shibboleth but I ended up needing to do some work in attribute-map.xml that allows metadata provided by the IDP to be read by our developer but that should not be relevent to all cases. If you have any questions or corrections feel free to shoot me an email.
