@@ -31,15 +31,13 @@ This part should be placed in the first section after the initial SPConfig block
 
 This section tells Shibboleth which sections of the website should be protected behind the SSO. In our case example.com/secure will be protected but example.com will not. The name parameter is the subfolder that will be protected and requireSession states that they must be authenticated with shibboleth to see the contents.
 
-```xml
-<RequestMapper type="Native">
-  <RequestMap applicationId="default">
-    <Host name="example.com">
-      <Path name="secure" authType="shibboleth" requireSession="true"/>
-    </Host>
-  </RequestMap>
-</RequestMapper>
-```
+    <RequestMapper type="Native">  
+      <RequestMap applicationId="default">  
+        <Host name="example.com"> 
+          <Path name="secure" authType="shibboleth" requireSession="true"/>  
+        </Host>  
+      </RequestMap>  
+    </RequestMapper>  
 
 The entityID created here is what your site calls itself when communicating with the IDP.
 
