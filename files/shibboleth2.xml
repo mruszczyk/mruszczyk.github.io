@@ -1,0 +1,41 @@
+<SPConfig xmlns="urn:mace:shibboleth:2.0:native:sp:config" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" clockSkew="1800">
+    <InProcess logger="native.logger">
+        <ISAPI normalizeRequest="true" safeHeaderNames="true">
+            <Site id="1" name="example.com" />
+        </ISAPI>
+    </InProcess>
+    <RequestMapper type="Native">
+        <RequestMap applicationId="default">
+            <Host name="example.com">
+                <Path name="secure" authType="shibboleth" requireSession="true" />
+            </Host>
+        </RequestMap>
+    </RequestMapper>
+    <ApplicationDefaults entityID="https://example.com/shibboleth">
+        <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="true">
+            <!--This section states the location of your IDP and what protocols it should support-->
+            <SSO entityID="https://idp.client.com">SAML2 SAML1</SSO>
+            <!--This section states what protocols to support in regards to logging out-->
+            <Logout>SAML2 Local</Logout>
+            <!--These handlers allow you to interact with Shibboleth itself by visiting a url (In our case example.com/Shibboleth.sso/Location)-->
+            <!--This handler outputs an xml metadata file that you can use to find information about your shibboleth install and information you will be required to provide the IDP-->
+            <Handler type="MetadataGenerator" Location="/Metadata" signing="false" />
+            <!-- Status reporting service. -->
+            <Handler type="Status" Location="/Status" acl="127.0.0.1" />
+            <!-- This handler outputs information about your current logged in session -->
+            <Handler type="Session" Location="/Session" showAttributeValues="true" />
+            <!-- JSON feed of discovery information. -->
+            <Handler type="DiscoveryFeed" Location="/DiscoFeed" />
+        </Sessions>
+        <Errors supportContact="root@localhost" logoLocation="/shibboleth-sp/logo.jpg" styleSheet="/shibboleth-sp/main.css" />
+        <MetadataProvider type="XML" file="partner-metadata.xml" />
+        <!-- Attribute and trust options you shouldn't need to change. -->
+        <AttributeExtractor type="XML" validate="true" path="attribute-map.xml" />
+        <AttributeResolver type="Query" subjectMatch="true" />
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml" />
+    </ApplicationDefaults>
+    <!-- Security policies you shouldn't change unless you know what you're doing. -->
+    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml" />
+    <!-- Low-level configuration about protocols and bindings available for use. -->
+    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml" />
+</SPConfig>
