@@ -81,6 +81,6 @@ This is the important part, this is the metadata provided by your IDP with "inst
     <AttributeResolver type="Query" subjectMatch="true"/>
     <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
 
-That was about it for configuring the shibboleth2.xml file. There are several other sections that have values that should not be removed but I didn't break them out. I've posted a complete "basic" configuration file [here](http://mruszczyk.github.io/files/shibboleth2.xml) that includes those sections.
+That was about it for configuring the shibboleth2.xml file. There are several other sections that have values that should not be removed but I didn't break them out. I've posted a complete "basic" configuration file [here](https://mruszczyk.github.io/assets/files/shibboleth2.xml) that includes those sections.
 
 At this point I had thought I was done with configuring Shibboleth but I ended up needing to do some work in attribute-map.xml that allows metadata provided by the IDP to be read by our developer but that should not be relevent to all cases. If you have any questions or corrections feel free to shoot me an email.
